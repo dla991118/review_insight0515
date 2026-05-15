@@ -80,6 +80,10 @@ app.post('/api/analyze', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Review Insight Backend listening at http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Review Insight Backend listening at http://localhost:${port}`);
+  });
+}
+
+module.exports = app;
