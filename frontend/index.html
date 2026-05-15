@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVIEW INSIGHT | AI SENTIMENT ANALYZER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="m-stripe-container">
+        <div class="stripe blue-light"></div>
+        <div class="stripe blue-dark"></div>
+        <div class="stripe red"></div>
+    </div>
+
+    <nav class="top-nav">
+        <div class="nav-content">
+            <span class="logo">REVIEW <span class="thin">INSIGHT</span></span>
+            <span class="system-status">SYSTEM READY</span>
+        </div>
+    </nav>
+
+    <main class="hero">
+        <section class="hero-content">
+            <h1 class="main-title">AI SENTIMENT<br>ANALYZER</h1>
+            <p class="subtitle">INDUSTRIAL PRECISION EMOTION ANALYSIS ENGINE</p>
+            
+            <div class="input-container">
+                <textarea id="textInput" placeholder="분석할 텍스트를 입력하세요..."></textarea>
+                <div class="action-bar">
+                    <button id="analyzeBtn">ANALYZE</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 REVIEW INSIGHT. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <div id="resultModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>ANALYSIS RESULT</h2>
+                <button id="closeModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="result-row">
+                    <span class="label">SENTIMENT:</span>
+                    <span id="sentimentValue" class="value positive">POSITIVE</span>
+                </div>
+                <div class="result-row">
+                    <span class="label">CONFIDENCE:</span>
+                    <div class="confidence-container">
+                        <span id="confidenceValue" class="value">92%</span>
+                        <div class="progress-bg">
+                            <div id="confidenceBar" class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-row column">
+                    <span class="label">REASONING:</span>
+                    <p id="reasonValue" class="reason-text"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="modalOkBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
