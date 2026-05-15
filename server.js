@@ -4,12 +4,22 @@ const cors = require('cors');
 const { OpenAI } = require('openai');
 const { createClient } = require('@supabase/supabase-js');
 
+const path = require('path');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the current directory
+app.use(express.static(__dirname));
+
+// Root Route - Serve index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Clients
 const openai = new OpenAI({
