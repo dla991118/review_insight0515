@@ -42,7 +42,7 @@ app.post('/api/analyze', async (req, res) => {
   try {
     // 1. OpenAI Analysis
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini", // Use more reliable model for JSON mode
       messages: [
         {
           role: "system",
@@ -59,8 +59,8 @@ app.post('/api/analyze', async (req, res) => {
     const analysisResult = JSON.parse(response.choices[0].message.content);
 
     // 2. Supabase Logging
-    if (process.env.SUPABASE_URL && process.env.SUPABASE_URL !== 'https://placeholder.supabase.co') {
-        const { error } = await supabase
+    if (process.env.SUPABASE_URL && process.env.SUPABASE_URL.includes('.supabase.co')) {
+        const { error: dbError } = await supabase
           .from('sentiment_logs')
           .insert([
             { 
@@ -71,7 +71,10 @@ app.post('/api/analyze', async (req, res) => {
             }
           ]);
         
-        if (error) console.error('Supabase Error:', error);
+        if (dbError) {
+            console.error('Supabase Error:', dbError);
+            // We don't stop the whole process if DB logging fails, but we log it
+        }
     }
 
     // 3. Return Response
@@ -81,11 +84,11 @@ app.post('/api/analyze', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('Detailed API Error:', error);
     res.status(500).json({ 
       success: false, 
-      error: 'Analysis failed',
-      details: error.message 
+      error: error.message || 'Analysis failed',
+      type: error.constructor.name
     });
   }
 });
